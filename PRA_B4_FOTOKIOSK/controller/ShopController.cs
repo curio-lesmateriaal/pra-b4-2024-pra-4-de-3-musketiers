@@ -17,18 +17,38 @@ namespace PRA_B4_FOTOKIOSK.controller
 
         public void Start()
         {
-            // Stel de prijslijst in aan de rechter kant.
-            ShopManager.SetShopPriceList("Prijzen:\nFoto 10x15: €2.55");
 
-            // Stel de bon in onderaan het scherm
-            ShopManager.SetShopReceipt("Eindbedrag\n€");
+            ShopManager shopManager = new ShopManager();
 
             // Vul de productlijst met producten
-           ShopManager.Products.Add(new KioskProduct() { Name = "Foto 10x15", Price = (int)2.55 });
+            ShopManager.Products.Add(new KioskProduct() { Name = "Foto 10x15", Price = (int)2.55 });
 
+            ShopManager.Products.Add(new KioskProduct() { Name = "Mok met foto", Price = (int)5 });
+
+            ShopManager.Products.Add(new KioskProduct() { Name = "Shirt met foto", Price = (int)12 });
             
-            // Update dropdown met producten
-            ShopManager.UpdateDropDownProducts();
+
+            // Foreach-loop om de prijslijst te genereren
+
+            foreach (KioskProduct product in ShopManager.Products)
+
+            {
+
+                // Stel de prijslijst in aan de rechter kant.
+
+                ShopManager.SetShopPriceList("Prijzen:\nFoto 10x15: €2\nmok met foto: €5\nshirt met foto €12");
+
+                // Stel de bon in onderaan het scherm
+
+                ShopManager.SetShopReceipt("Eindbedrag\n€");
+
+
+                // Update dropdown met producten
+
+                ShopManager.UpdateDropDownProducts();
+
+            }
+
         }
 
         // Wordt uitgevoerd wanneer er op de Toevoegen knop is geklikt
@@ -61,7 +81,7 @@ namespace PRA_B4_FOTOKIOSK.controller
             if (selectedProduct != null && fotoId.HasValue && amount.HasValue && amount > 0)
             {
                 // Bereken het totaalbedrag voor dit product
-                double total = selectedProduct.Price * amount.Value;
+                decimal total = selectedProduct.Price * amount.Value;
 
                 // Voeg de productinformatie en het totaalbedrag toe aan de bon
                 string receiptLine = $"{selectedProduct.Name} (Foto {fotoId}): {amount} x €{selectedProduct.Price} = €{total}\n";
