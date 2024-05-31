@@ -1,4 +1,4 @@
-﻿using PRA_B4_FOTOKIOSK.magie;
+using PRA_B4_FOTOKIOSK.magie;
 using PRA_B4_FOTOKIOSK.models;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace PRA_B4_FOTOKIOSK.controller
 {
@@ -14,7 +13,7 @@ namespace PRA_B4_FOTOKIOSK.controller
     {
 
         public static Home Window { get; set; }
-
+            
         public void Start()
         {
 
@@ -52,24 +51,6 @@ namespace PRA_B4_FOTOKIOSK.controller
         }
 
         // Wordt uitgevoerd wanneer er op de Toevoegen knop is geklikt
-        private double CalculateGrandTotal(string receipt)
-        {
-            double grandTotal = 0.0;
-            string[] lines = receipt.Split('\n');
-            foreach (string line in lines)
-            {
-                if (line.Contains('='))
-                {
-                    string[] parts = line.Split('=');
-                    if (parts.Length == 2 && double.TryParse(parts[1].Replace("€", "").Trim(), out double lineTotal))
-                    {
-                        grandTotal += lineTotal;
-                    }
-                }
-            }
-            return grandTotal;
-        }
-
         public void AddButtonClick()
         {
             // Haal het geselecteerde product, foto-id en aantal op
@@ -99,32 +80,16 @@ namespace PRA_B4_FOTOKIOSK.controller
             }
         }
 
-
         // Wordt uitgevoerd wanneer er op de Resetten knop is geklikt
         public void ResetButtonClick()
         {
-            // Reset de bon en het invoerformulier
-            ShopManager.SetShopReceipt("Eindbedrag\n€");
-            Window.tbFotoId.Text = "";
-            Window.tbAmount.Text = "";
-            Window.cbProducts.SelectedIndex = -1;
-        }
 
+        }
 
         // Wordt uitgevoerd wanneer er op de Save knop is geklikt
         public void SaveButtonClick()
         {
-            // Haal de huidige bon op
-            string receipt = ShopManager.GetShopReceipt();
-
-            // Sla de bon op in een bestand
-            File.WriteAllText("receipt.txt", receipt);
-
-            // Toon een bericht dat de bon is opgeslagen
-            MessageBox.Show("Bon is opgeslagen.");
         }
 
-
     }
-
 }
