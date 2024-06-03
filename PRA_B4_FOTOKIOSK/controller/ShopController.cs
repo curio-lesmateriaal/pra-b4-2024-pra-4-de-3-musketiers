@@ -1,4 +1,4 @@
-﻿using PRA_B4_FOTOKIOSK.magie;
+using PRA_B4_FOTOKIOSK.magie;
 using PRA_B4_FOTOKIOSK.models;
 using System;
 using System.Collections.Generic;
@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Shapes;
 
 namespace PRA_B4_FOTOKIOSK.controller
 {
@@ -14,6 +16,7 @@ namespace PRA_B4_FOTOKIOSK.controller
     {
 
         public static Home Window { get; set; }
+        private List<OrderedProduct> orderedProducts = new List<OrderedProduct>();
 
         public void Start()
         {
@@ -111,18 +114,22 @@ namespace PRA_B4_FOTOKIOSK.controller
             Window.cbProducts.SelectedIndex = -1;
         }
 
-
         // Wordt uitgevoerd wanneer er op de Save knop is geklikt
         public void SaveButtonClick()
         {
-            // Haal de huidige bon op
-            string receipt = ShopManager.GetShopReceipt();
+            {
+                // Haal de huidige bon op
+                string receipt = ShopManager.GetShopReceipt();
 
-            // Sla de bon op in een bestand
-            File.WriteAllText("receipt.txt", receipt);
+                // Definieer het pad van het bestand waar de bon zal worden opgeslagen
+                string filePath = "receipt.txt";
 
-            // Toon een bericht dat de bon is opgeslagen
-            MessageBox.Show("Bon is opgeslagen.");
+                // Schrijf de inhoud van de bon naar het bestand
+                File.WriteAllText(filePath, receipt);
+
+                // Toon een bericht dat de bon is opgeslagen
+                MessageBox.Show("Bon is opgeslagen.");
+            }
         }
 
 
